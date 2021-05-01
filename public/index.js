@@ -144,10 +144,14 @@ function sendTransaction(isAdding) {
   });
 }
 
-document.querySelector("#add-btn").onclick = function() {
+document.querySelector("#add-btn").onclick = (e) => {
+  //not sure if prevent default is necessary here and in next portion
+  e.preventDefault();
   sendTransaction(true);
 };
 
-document.querySelector("#sub-btn").onclick = function() {
+document.querySelector("#sub-btn").onclick = (e) => {
+  e.preventDefault();
+  //^^ this one? ^^
   sendTransaction(false);
 };
