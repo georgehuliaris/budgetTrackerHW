@@ -8,17 +8,17 @@ const FILES_TO_CACHE = [
 const PRECACHE = "precache-v1";
 const RUNTIME = "runtime";
 
-self.addEventListener("install", (event) => {
-    event.waitUntil(
+self.addEventListener("install", (e) => {
+    e.waitUntil(
         caches.open(PRECACHE)
         .then((cache) => cache.addAll(FILES_TO_CACHE))
         .then(self.skipWaiting())
     );
 });
 
-self.addEventListener("activate", (event) => {
+self.addEventListener("activate", (e) => {
     const currentCaches = [PRECACHE, RUNTIME];
-    event.waitUntil(
+    e.waitUntil(
         caches.keys()
         .then((cacheNames) => {
             return Promise.all(
@@ -40,7 +40,7 @@ self.addEventListener("fetch", (e) => {
                 }
                 return caches.open(RUNTIME).then((cache) => {
                     return fetch(e.request).then((response) => {
-                        return cache.put(event.request, response.clone()).then(() => {
+                        return cache.put(e.request, response.clone()).then(() => {
                             return response;
                         });
                     });
